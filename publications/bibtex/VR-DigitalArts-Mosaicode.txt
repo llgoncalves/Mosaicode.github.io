@@ -1,0 +1,14 @@
+@INPROCEEDINGS{8114438, 
+author={Fl\'{a}vio Luiz Schiavoni and Luan Luiz Gon\c{c}alves}, 
+booktitle={2017 19th Symposium on Virtual and Augmented Reality (SVR)}, 
+title={From Virtual Reality to Digital Arts with Mosaicode}, 
+year={2017}, 
+volume={}, 
+number={}, 
+pages={200-206}, 
+keywords={Digital art;Programming;Programming environments;Tools;Virtual reality;Visualization;DSL;VPL;digital arts;mosaicode;virtual reality}, 
+doi={10.1109/SVR.2017.33}, 
+ISBN={978-1-5386-3588-9}, 
+month={Nov},
+address={Curitiba - PR - Brazil}
+}

@@ -1,0 +1,8 @@
+@INPROCEEDINGS{SchiavoniGoncalvesANPPOM2017,
+    AUTHOR="Fl\'avio Luiz Schiavoni and Luan Luiz Gonçalves",
+    TITLE="Programação musical para a web com o Mosaicode",
+    BOOKTITLE="Anais do XXVII Congresso da Associação Nacional de Pesquisa e Pós-Graduação em Música",
+    ADDRESS="Campinas - SP - Brazil",
+    pages="1-6",
+    YEAR="2017"
+}

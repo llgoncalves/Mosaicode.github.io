@@ -1,0 +1,9 @@
+@INPROCEEDINGS{SchiavoniGoncalves2017,
+    AUTHOR="Fl\'avio Luiz Schiavoni and Luan Luiz Gonçalves",
+    TITLE="Teste de Usabilidade do Sistema Mosaicode",
+    BOOKTITLE="Anais [do] IV Workshop de Iniciação Científica em Sistemas de Informação (WICSI)",
+    ADDRESS="Lavras - MG - Brazil",
+    howpublished = "\url{http://sbsi2017.dcc.ufla.br/download/wicsi.pdf}",
+    pages="5-8",
+    YEAR="2017"
+}
