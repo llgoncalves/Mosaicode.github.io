@@ -1,0 +1,8 @@
+@INPROCEEDINGS{SchiavoniGoncalvesGomes2017,
+    AUTHOR="Fl\'avio Luiz Schiavoni and Luan Luiz Gonçalves and André Lucas Nascimento Gomes",
+    TITLE="Web Audio application development with Mosaicode",
+    BOOKTITLE="Proceedings of the 16th Brazilian Symposium on Computer Music",
+    ADDRESS="São Paulo - SP - Brazil",
+    pages="107-114",
+    YEAR="2017"
+}
