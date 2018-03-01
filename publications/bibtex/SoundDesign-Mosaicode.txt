@@ -1,0 +1,8 @@
+@mastersthesis{goncalves:2017:ufsj,
+    title    = {Sound Design com o Mosaicode},
+    school   = {Universidade Federal de São João del-Rei},
+    author   = {Luiz Gon\c{c}alves, Luan},
+    year     = {2017},
+    type     = {Monografia (Bacharelado em Ciência
+da Computação)},
+}
