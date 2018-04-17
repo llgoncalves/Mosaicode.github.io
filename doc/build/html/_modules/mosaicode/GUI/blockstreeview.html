@@ -1,0 +1,400 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>mosaicode.GUI.blockstreeview &mdash; mosaicode 2.0.0 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="mosaicode 2.0.0 documentation" href="../../../index.html"/>
+        <link rel="up" title="Module code" href="../../index.html"/> 
+
+  
+  <script src="../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> mosaicode
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                2.0.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../user-documentation/getting-started/index.html">Getting started</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">mosaicode</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>mosaicode.GUI.blockstreeview</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for mosaicode.GUI.blockstreeview</h1><div class="highlight"><pre>
+<span class="ch">#!/usr/bin/env python</span>
+<span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">This module contains the BlocksTreeView class.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">gi</span>
+<span class="n">gi</span><span class="o">.</span><span class="n">require_version</span><span class="p">(</span><span class="s1">&#39;Gtk&#39;</span><span class="p">,</span> <span class="s1">&#39;3.0&#39;</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">gi.repository</span> <span class="kn">import</span> <span class="n">Gtk</span>
+<span class="kn">from</span> <span class="nn">gi.repository</span> <span class="kn">import</span> <span class="n">Gdk</span>
+<span class="kn">from</span> <span class="nn">gi.repository</span> <span class="kn">import</span> <span class="n">GdkPixbuf</span>
+<span class="kn">import</span> <span class="nn">gettext</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">gettext</span><span class="o">.</span><span class="n">gettext</span>
+
+
+<div class="viewcode-block" id="BlocksTreeView"><a class="viewcode-back" href="../../../mosaicode.GUI.html#mosaicode.GUI.blockstreeview.BlocksTreeView">[docs]</a><span class="k">class</span> <span class="nc">BlocksTreeView</span><span class="p">(</span><span class="n">Gtk</span><span class="o">.</span><span class="n">ScrolledWindow</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This class contains the methods related to BlocksTreeView class.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">main_window</span><span class="p">,</span> <span class="n">language</span><span class="p">,</span> <span class="n">blocks</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method is the constructor.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">Gtk</span><span class="o">.</span><span class="n">ScrolledWindow</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">main_window</span> <span class="o">=</span> <span class="n">main_window</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">current_filter</span> <span class="o">=</span> <span class="bp">None</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">tree_store</span> <span class="o">=</span> <span class="n">Gtk</span><span class="o">.</span><span class="n">TreeStore</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="nb">object</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">filter</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tree_store</span><span class="o">.</span><span class="n">filter_new</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">filter</span><span class="o">.</span><span class="n">set_visible_func</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__filter_func</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">blocks_tree_view</span> <span class="o">=</span> <span class="n">Gtk</span><span class="o">.</span><span class="n">TreeView</span><span class="o">.</span><span class="n">new_with_model</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filter</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">blocks_tree_view</span><span class="p">)</span>
+
+        <span class="n">col</span> <span class="o">=</span> <span class="n">Gtk</span><span class="o">.</span><span class="n">TreeViewColumn</span><span class="p">(</span><span class="n">_</span><span class="p">(</span><span class="s2">&quot;Available Blocks&quot;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">blocks_tree_view</span><span class="o">.</span><span class="n">append_column</span><span class="p">(</span><span class="n">col</span><span class="p">)</span>
+
+        <span class="n">cellrenderertext</span> <span class="o">=</span> <span class="n">Gtk</span><span class="o">.</span><span class="n">CellRendererText</span><span class="p">()</span>
+        <span class="n">col</span><span class="o">.</span><span class="n">pack_start</span><span class="p">(</span><span class="n">cellrenderertext</span><span class="p">,</span> <span class="bp">False</span><span class="p">)</span>
+        <span class="n">cellrenderertext</span><span class="o">.</span><span class="n">set_property</span><span class="p">(</span><span class="s1">&#39;background-set&#39;</span> <span class="p">,</span> <span class="bp">True</span><span class="p">)</span>
+        <span class="n">cellrenderertext</span><span class="o">.</span><span class="n">set_property</span><span class="p">(</span><span class="s1">&#39;foreground-set&#39;</span> <span class="p">,</span> <span class="bp">True</span><span class="p">)</span>
+        <span class="n">col</span><span class="o">.</span><span class="n">add_attribute</span><span class="p">(</span><span class="n">cellrenderertext</span><span class="p">,</span> <span class="s2">&quot;text&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="n">col</span><span class="o">.</span><span class="n">set_attributes</span><span class="p">(</span><span class="n">cellrenderertext</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">foreground</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">background</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+
+        <span class="n">cellrenderertext</span> <span class="o">=</span> <span class="n">Gtk</span><span class="o">.</span><span class="n">CellRendererText</span><span class="p">()</span>
+        <span class="n">col</span><span class="o">.</span><span class="n">pack_end</span><span class="p">(</span><span class="n">cellrenderertext</span><span class="p">,</span> <span class="bp">True</span><span class="p">)</span>
+        <span class="n">col</span><span class="o">.</span><span class="n">add_attribute</span><span class="p">(</span><span class="n">cellrenderertext</span><span class="p">,</span> <span class="s2">&quot;text&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">blocks_tree_view</span><span class="o">.</span><span class="n">set_enable_search</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">blocks_tree_view</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s2">&quot;row-activated&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__on_row_activated</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">blocks_tree_view</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s2">&quot;cursor-changed&quot;</span><span class="p">,</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">__on_tree_selection_changed</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">blocks_tree_view</span><span class="o">.</span><span class="n">enable_model_drag_source</span><span class="p">(</span>
+            <span class="n">Gdk</span><span class="o">.</span><span class="n">ModifierType</span><span class="o">.</span><span class="n">BUTTON1_MASK</span><span class="p">,</span>
+            <span class="p">[(</span><span class="s1">&#39;text/plain&#39;</span><span class="p">,</span> <span class="n">Gtk</span><span class="o">.</span><span class="n">TargetFlags</span><span class="o">.</span><span class="n">SAME_APP</span><span class="p">,</span> <span class="mi">1</span><span class="p">)],</span>
+            <span class="n">Gdk</span><span class="o">.</span><span class="n">DragAction</span><span class="o">.</span><span class="n">DEFAULT</span> <span class="o">|</span> <span class="n">Gdk</span><span class="o">.</span><span class="n">DragAction</span><span class="o">.</span><span class="n">COPY</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">blocks_tree_view</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s2">&quot;drag-data-get&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__drag_data</span><span class="p">)</span>
+
+        <span class="c1"># To separate blocks of this language</span>
+        <span class="n">block_list</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">group_list</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">blocks</span><span class="p">:</span>
+            <span class="n">instance</span> <span class="o">=</span> <span class="n">blocks</span><span class="p">[</span><span class="n">x</span><span class="p">]</span>
+            <span class="n">name</span> <span class="o">=</span> <span class="n">instance</span><span class="o">.</span><span class="n">language</span>
+            <span class="n">name</span> <span class="o">+=</span> <span class="s2">&quot;/&quot;</span> <span class="o">+</span> <span class="n">instance</span><span class="o">.</span><span class="n">framework</span>
+            <span class="k">if</span> <span class="n">name</span> <span class="o">!=</span> <span class="n">language</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="n">block_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">blocks</span><span class="p">[</span><span class="n">x</span><span class="p">]</span><span class="o">.</span><span class="n">group</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">group_list</span><span class="p">:</span>
+                <span class="n">group_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">blocks</span><span class="p">[</span><span class="n">x</span><span class="p">]</span><span class="o">.</span><span class="n">group</span><span class="p">)</span>
+
+        <span class="c1"># Sorting groups</span>
+        <span class="k">for</span> <span class="n">group</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">group_list</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__append_category</span><span class="p">(</span><span class="n">group</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">block_list</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__add_item</span><span class="p">(</span><span class="n">blocks</span><span class="p">[</span><span class="n">x</span><span class="p">])</span>
+
+
+    <span class="c1"># ----------------------------------------------------------------------</span>
+    <span class="k">def</span> <span class="nf">__add_item</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">block</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method add a block in blockstreeview.</span>
+
+<span class="sd">            Parameters:</span>
+<span class="sd">                * **block**</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">category</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__contains_category</span><span class="p">(</span><span class="n">block</span><span class="o">.</span><span class="n">group</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tree_store</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">category</span><span class="p">,</span>
+                        <span class="p">[</span><span class="n">block</span><span class="o">.</span><span class="n">label</span><span class="o">.</span><span class="n">title</span><span class="p">()[</span><span class="mi">0</span><span class="p">],</span>
+                        <span class="n">block</span><span class="o">.</span><span class="n">label</span><span class="p">,</span>
+                        <span class="s2">&quot;white&quot;</span><span class="p">,</span>
+                        <span class="n">block</span><span class="o">.</span><span class="n">get_color_as_rgba</span><span class="p">(),</span>
+                        <span class="n">block</span>
+                        <span class="p">])</span>
+
+    <span class="c1"># ----------------------------------------------------------------------</span>
+    <span class="k">def</span> <span class="nf">__append_category</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">category_name</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">tree_store</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="p">[</span><span class="bp">None</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">category_name</span><span class="p">),</span>
+                    <span class="s2">&quot;white&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;white&quot;</span><span class="p">,</span>
+                    <span class="bp">None</span><span class="p">])</span>
+
+    <span class="c1"># ----------------------------------------------------------------------</span>
+    <span class="k">def</span> <span class="nf">__contains_category</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">category_name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method verify if category name already exists.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">iter</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tree_store</span><span class="o">.</span><span class="n">get_iter_first</span><span class="p">()</span>
+        <span class="k">while</span> <span class="nb">iter</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">category_name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">tree_store</span><span class="p">[</span><span class="nb">iter</span><span class="p">][:]:</span>
+                <span class="k">return</span> <span class="nb">iter</span>
+            <span class="nb">iter</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tree_store</span><span class="o">.</span><span class="n">iter_next</span><span class="p">(</span><span class="nb">iter</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">__append_category</span><span class="p">(</span><span class="n">category_name</span><span class="p">)</span>
+
+    <span class="c1"># ----------------------------------------------------------------------</span>
+    <span class="k">def</span> <span class="nf">__filter_func</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="nb">iter</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This methods filters the functions.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_filter</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">True</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_filter</span> <span class="o">==</span> <span class="s2">&quot;None&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">True</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_filter</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">True</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">tree_store</span><span class="o">.</span><span class="n">iter_children</span><span class="p">(</span><span class="nb">iter</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">True</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_filter</span> <span class="ow">in</span> <span class="n">model</span><span class="p">[</span><span class="nb">iter</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
+
+    <span class="c1"># ----------------------------------------------------------------------</span>
+    <span class="k">def</span> <span class="nf">__on_tree_selection_changed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">treeview</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method monitors if tree selection was changed.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">treeViewSelection</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">blocks_tree_view</span><span class="o">.</span><span class="n">get_selection</span><span class="p">()</span>
+        <span class="p">(</span><span class="n">tree_view_model</span><span class="p">,</span> <span class="nb">iter</span><span class="p">)</span> <span class="o">=</span> <span class="n">treeViewSelection</span><span class="o">.</span><span class="n">get_selected</span><span class="p">()</span>
+
+        <span class="c1"># If it is a category, give up</span>
+        <span class="k">if</span> <span class="n">tree_view_model</span><span class="o">.</span><span class="n">iter_has_child</span><span class="p">(</span><span class="nb">iter</span><span class="p">):</span>
+            <span class="k">return</span>
+
+        <span class="n">block</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_selected_block</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">block</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">main_window</span><span class="o">.</span><span class="n">main_control</span><span class="o">.</span><span class="n">set_block</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_selected_block</span><span class="p">())</span>
+
+    <span class="c1"># ----------------------------------------------------------------------</span>
+<div class="viewcode-block" id="BlocksTreeView.search"><a class="viewcode-back" href="../../../mosaicode.GUI.html#mosaicode.GUI.blockstreeview.BlocksTreeView.search">[docs]</a>    <span class="k">def</span> <span class="nf">search</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method search the key in blocks_tree_view.</span>
+
+<span class="sd">            Parameters:</span>
+<span class="sd">                * **key** (:class:`str&lt;str&gt;`)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">blocks_tree_view</span><span class="o">.</span><span class="n">expand_all</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">current_filter</span> <span class="o">=</span> <span class="n">key</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">filter</span><span class="o">.</span><span class="n">refilter</span><span class="p">()</span></div>
+
+    <span class="c1"># ----------------------------------------------------------------------</span>
+    <span class="k">def</span> <span class="nf">__on_row_activated</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tree_view</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">column</span><span class="p">):</span>
+        <span class="n">block</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_selected_block</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">block</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">main_window</span><span class="o">.</span><span class="n">main_control</span><span class="o">.</span><span class="n">add_block</span><span class="p">(</span><span class="n">block</span><span class="p">)</span>
+
+    <span class="c1"># ----------------------------------------------------------------------</span>
+    <span class="k">def</span> <span class="nf">__drag_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">treeview</span><span class="p">,</span> <span class="n">context</span><span class="p">,</span> <span class="n">selection</span><span class="p">,</span> <span class="n">target_id</span><span class="p">,</span> <span class="n">etime</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method drag the a selection data.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">block</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_selected_block</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">block</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">selection</span><span class="o">.</span><span class="n">set_text</span><span class="p">(</span><span class="n">block</span><span class="o">.</span><span class="n">label</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="c1"># ----------------------------------------------------------------------</span>
+<div class="viewcode-block" id="BlocksTreeView.get_selected_block"><a class="viewcode-back" href="../../../mosaicode.GUI.html#mosaicode.GUI.blockstreeview.BlocksTreeView.get_selected_block">[docs]</a>    <span class="k">def</span> <span class="nf">get_selected_block</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method get the block selected.</span>
+
+<span class="sd">            Returns:</span>
+<span class="sd">                * **Types** (:class:`&lt;&gt;`) or None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">treeselection</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">blocks_tree_view</span><span class="o">.</span><span class="n">get_selection</span><span class="p">()</span>
+        <span class="n">model</span><span class="p">,</span> <span class="n">iterac</span> <span class="o">=</span> <span class="n">treeselection</span><span class="o">.</span><span class="n">get_selected</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">iterac</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">None</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">get_path</span><span class="p">(</span><span class="n">iterac</span><span class="p">)</span>
+        <span class="n">block</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">get_value</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">get_iter</span><span class="p">(</span><span class="n">path</span><span class="p">),</span> <span class="mi">4</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">block</span></div></div>
+<span class="c1"># ----------------------------------------------------------------------</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, Flávio.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../',
+            VERSION:'2.0.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

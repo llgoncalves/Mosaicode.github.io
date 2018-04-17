@@ -1,0 +1,503 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>mosaicode.GUI.menu &mdash; mosaicode 2.0.0 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="mosaicode 2.0.0 documentation" href="../../../index.html"/>
+        <link rel="up" title="Module code" href="../../index.html"/> 
+
+  
+  <script src="../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> mosaicode
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                2.0.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../user-documentation/getting-started/index.html">Getting started</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">mosaicode</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>mosaicode.GUI.menu</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for mosaicode.GUI.menu</h1><div class="highlight"><pre>
+<span class="ch">#!/usr/bin/env python</span>
+<span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">This module contains the menu bar.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">gi</span>
+<span class="n">gi</span><span class="o">.</span><span class="n">require_version</span><span class="p">(</span><span class="s1">&#39;Gtk&#39;</span><span class="p">,</span> <span class="s1">&#39;3.0&#39;</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">gi.repository</span> <span class="kn">import</span> <span class="n">Gtk</span>
+
+<span class="kn">import</span> <span class="nn">gettext</span>
+
+<span class="n">_</span> <span class="o">=</span> <span class="n">gettext</span><span class="o">.</span><span class="n">gettext</span>
+
+
+<div class="viewcode-block" id="Menu"><a class="viewcode-back" href="../../../mosaicode.GUI.html#mosaicode.GUI.menu.Menu">[docs]</a><span class="k">class</span> <span class="nc">Menu</span><span class="p">(</span><span class="n">Gtk</span><span class="o">.</span><span class="n">MenuBar</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This class contains methods related the Menu class</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># ----------------------------------------------------------------------</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">main_window</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Constructor.&quot;&quot;&quot;</span>
+        <span class="n">Gtk</span><span class="o">.</span><span class="n">MenuBar</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">main_window</span> <span class="o">=</span> <span class="n">main_window</span>
+
+        <span class="n">mc</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">main_window</span><span class="o">.</span><span class="n">main_control</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">accel_group</span> <span class="o">=</span> <span class="n">Gtk</span><span class="o">.</span><span class="n">AccelGroup</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">main_window</span><span class="o">.</span><span class="n">add_accel_group</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">accel_group</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">actions</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="c1"># -------------------------- File -------------------------------------</span>
+        <span class="n">file_menu</span> <span class="o">=</span> <span class="n">Gtk</span><span class="o">.</span><span class="n">Menu</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">recent_files_menu</span> <span class="o">=</span> <span class="n">Gtk</span><span class="o">.</span><span class="n">Menu</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">create_menu</span><span class="p">(</span><span class="n">_</span><span class="p">(</span><span class="s2">&quot;New&quot;</span><span class="p">),</span> <span class="s2">&quot;&lt;Control&gt;N&quot;</span><span class="p">,</span> <span class="n">file_menu</span><span class="p">,</span> <span class="n">mc</span><span class="o">.</span><span class="n">new</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">create_menu</span><span class="p">(</span><span class="n">_</span><span class="p">(</span><span class="s2">&quot;Open&quot;</span><span class="p">),</span> <span class="s2">&quot;&lt;Control&gt;O&quot;</span><span class="p">,</span> <span class="n">file_menu</span><span class="p">,</span> <span class="n">mc</span><span class="o">.</span><span class="n">select_open</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">create_menu</span><span class="p">(</span><span class="n">_</span><span class="p">(</span><span class="s2">&quot;Close&quot;</span><span class="p">),</span> <span class="s2">&quot;&lt;Control&gt;W&quot;</span><span class="p">,</span> <span class="n">file_menu</span><span class="p">,</span> <span class="n">mc</span><span class="o">.</span><span class="n">close</span><span class="p">)</span>
+        <span class="n">recents</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_menu</span><span class="p">(</span><span class="n">_</span><span class="p">(</span><span class="s2">&quot;Recents&quot;</span><span class="p">),</span> <span class="bp">None</span><span class="p">,</span> <span class="n">file_menu</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
+        <span class="n">recents</span><span class="o">.</span><span class="n">set_submenu</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">recent_files_menu</span><span class="p">)</span>
+        <span class="n">file_menu</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Gtk</span><span class="o">.</span><span class="n">SeparatorMenuItem</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">create_menu</span><span class="p">(</span><span class="n">_</span><span class="p">(</span><span class="s2">&quot;Save&quot;</span><span class="p">),</span> <span class="s2">&quot;&lt;Control&gt;S&quot;</span><span class="p">,</span> <span class="n">file_menu</span><span class="p">,</span> <span class="n">mc</span><span class="o">.</span><span class="n">save</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">create_menu</span><span class="p">(</span><span class="n">_</span><span class="p">(</span><span class="s2">&quot;Save As...&quot;</span><span class="p">),</span> <span class="bp">None</span><span class="p">,</span> <span class="n">file_menu</span><span class="p">,</span> <span class="n">mc</span><span class="o">.</span><span class="n">save_as</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">create_menu</span><span class="p">(</span><span class="n">_</span><span class="p">(</span><span class="s2">&quot;Export Diagram As PNG...&quot;</span><span class="p">),</span> <span class="s2">&quot;&lt;Control&gt;E&quot;</span><span class="p">,</span>
+                           <span class="n">file_menu</span><span class="p">,</span> <span class="n">mc</span><span class="o">.</span><span class="n">export_diagram</span><span class="p">)</span>
+        <span class="n">file_menu</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Gtk</span><span class="o">.</span><span class="n">SeparatorMenuItem</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">create_menu</span><span class="p">(</span><span class="n">_</span><span class="p">(</span><span class="s2">&quot;Exit&quot;</span><span class="p">),</span> <span class="s2">&quot;&lt;Control&gt;Q&quot;</span><span class="p">,</span> <span class="n">file_menu</span><span class="p">,</span> <span class="n">mc</span><span class="o">.</span><span class="n">exit</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_menu_category</span><span class="p">(</span><span class="n">_</span><span class="p">(</span><span class="s2">&quot;File&quot;</span><span class="p">),</span> <span class="n">file_menu</span><span class="p">)</span>
+
+        <span class="c1"># -------------------------- Edit -------------------------------------</span>
+        <span class="n">edit_menu</span> <span class="o">=</span> <span class="n">Gtk</span><span class="o">.</span><span class="n">Menu</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">create_menu</span><span class="p">(</span><span class="n">_</span><span class="p">(</span><span class="s2">&quot;Undo&quot;</span><span class="p">),</span> <span class="s2">&quot;&lt;Control&gt;Z&quot;</span><span class="p">,</span> <span class="n">edit_menu</span><span class="p">,</span> <span class="n">mc</span><span class="o">.</span><span class="n">undo</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">create_menu</span><span class="p">(</span><span class="n">_</span><span class="p">(</span><span class="s2">&quot;Redo&quot;</span><span class="p">),</span> <span class="s2">&quot;&lt;Shift&gt;&lt;Control&gt;Z&quot;</span><span class="p">,</span> <span class="n">edit_menu</span><span class="p">,</span> <span class="n">mc</span><span class="o">.</span><span class="n">redo</span><span class="p">)</span>
+        <span class="n">edit_menu</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Gtk</span><span class="o">.</span><span class="n">SeparatorMenuItem</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">create_menu</span><span class="p">(</span>
+            <span class="n">_</span><span class="p">(</span><span class="s2">&quot;Select All&quot;</span><span class="p">),</span> <span class="s2">&quot;&lt;Control&gt;A&quot;</span><span class="p">,</span> <span class="n">edit_menu</span><span class="p">,</span> <span class="n">mc</span><span class="o">.</span><span class="n">select_all</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">create_menu</span><span class="p">(</span><span class="n">_</span><span class="p">(</span><span class="s2">&quot;Cut&quot;</span><span class="p">),</span> <span class="s2">&quot;&lt;Control&gt;X&quot;</span><span class="p">,</span> <span class="n">edit_menu</span><span class="p">,</span> <span class="n">mc</span><span class="o">.</span><span class="n">cut</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">create_menu</span><span class="p">(</span><span class="n">_</span><span class="p">(</span><span class="s2">&quot;Copy&quot;</span><span class="p">),</span> <span class="s2">&quot;&lt;Control&gt;C&quot;</span><span class="p">,</span> <span class="n">edit_menu</span><span class="p">,</span> <span class="n">mc</span><span class="o">.</span><span class="n">copy</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">create_menu</span><span class="p">(</span><span class="n">_</span><span class="p">(</span><span class="s2">&quot;Paste&quot;</span><span class="p">),</span> <span class="s2">&quot;&lt;Control&gt;V&quot;</span><span class="p">,</span> <span class="n">edit_menu</span><span class="p">,</span> <span class="n">mc</span><span class="o">.</span><span class="n">paste</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">create_menu</span><span class="p">(</span><span class="n">_</span><span class="p">(</span><span class="s2">&quot;Delete&quot;</span><span class="p">),</span> <span class="s2">&quot;Delete&quot;</span><span class="p">,</span> <span class="n">edit_menu</span><span class="p">,</span> <span class="n">mc</span><span class="o">.</span><span class="n">delete</span><span class="p">)</span>
+        <span class="n">edit_menu</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Gtk</span><span class="o">.</span><span class="n">SeparatorMenuItem</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">create_menu</span><span class="p">(</span><span class="n">_</span><span class="p">(</span><span class="s2">&quot;Align Top&quot;</span><span class="p">),</span> <span class="s2">&quot;&lt;Control&gt;1&quot;</span><span class="p">,</span> <span class="n">edit_menu</span><span class="p">,</span> <span class="n">mc</span><span class="o">.</span><span class="n">align_top</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">create_menu</span><span class="p">(</span><span class="n">_</span><span class="p">(</span><span class="s2">&quot;Align Bottom&quot;</span><span class="p">),</span> <span class="s2">&quot;&lt;Control&gt;2&quot;</span><span class="p">,</span> <span class="n">edit_menu</span><span class="p">,</span> <span class="n">mc</span><span class="o">.</span><span class="n">align_bottom</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">create_menu</span><span class="p">(</span><span class="n">_</span><span class="p">(</span><span class="s2">&quot;Align Left&quot;</span><span class="p">),</span> <span class="s2">&quot;&lt;Control&gt;3&quot;</span><span class="p">,</span> <span class="n">edit_menu</span><span class="p">,</span> <span class="n">mc</span><span class="o">.</span><span class="n">align_left</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">create_menu</span><span class="p">(</span><span class="n">_</span><span class="p">(</span><span class="s2">&quot;Align Right&quot;</span><span class="p">),</span> <span class="s2">&quot;&lt;Control&gt;4&quot;</span><span class="p">,</span> <span class="n">edit_menu</span><span class="p">,</span> <span class="n">mc</span><span class="o">.</span><span class="n">align_right</span><span class="p">)</span>
+        <span class="n">edit_menu</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Gtk</span><span class="o">.</span><span class="n">SeparatorMenuItem</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">create_menu</span><span class="p">(</span>
+            <span class="n">_</span><span class="p">(</span><span class="s2">&quot;Clear Console&quot;</span><span class="p">),</span> <span class="s2">&quot;&lt;Control&gt;L&quot;</span><span class="p">,</span> <span class="n">edit_menu</span><span class="p">,</span> <span class="n">mc</span><span class="o">.</span><span class="n">clear_console</span><span class="p">)</span>
+        <span class="n">edit_menu</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Gtk</span><span class="o">.</span><span class="n">SeparatorMenuItem</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">create_menu</span><span class="p">(</span><span class="n">_</span><span class="p">(</span><span class="s2">&quot;Preferences&quot;</span><span class="p">),</span> <span class="bp">None</span><span class="p">,</span> <span class="n">edit_menu</span><span class="p">,</span> <span class="n">mc</span><span class="o">.</span><span class="n">preferences</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_menu_category</span><span class="p">(</span><span class="n">_</span><span class="p">(</span><span class="s2">&quot;Edit&quot;</span><span class="p">),</span> <span class="n">edit_menu</span><span class="p">)</span>
+
+        <span class="c1"># -------------------------- View -------------------------------------</span>
+        <span class="n">view_menu</span> <span class="o">=</span> <span class="n">Gtk</span><span class="o">.</span><span class="n">Menu</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">create_menu</span><span class="p">(</span><span class="n">_</span><span class="p">(</span><span class="s2">&quot;Zoom In&quot;</span><span class="p">),</span> <span class="bp">None</span><span class="p">,</span> <span class="n">view_menu</span><span class="p">,</span> <span class="n">mc</span><span class="o">.</span><span class="n">zoom_in</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">create_menu</span><span class="p">(</span><span class="n">_</span><span class="p">(</span><span class="s2">&quot;Zoom Out&quot;</span><span class="p">),</span> <span class="bp">None</span><span class="p">,</span> <span class="n">view_menu</span><span class="p">,</span> <span class="n">mc</span><span class="o">.</span><span class="n">zoom_out</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">create_menu</span><span class="p">(</span>
+            <span class="n">_</span><span class="p">(</span><span class="s2">&quot;Normal Size&quot;</span><span class="p">),</span> <span class="s2">&quot;&lt;Control&gt;0&quot;</span><span class="p">,</span> <span class="n">view_menu</span><span class="p">,</span> <span class="n">mc</span><span class="o">.</span><span class="n">zoom_normal</span><span class="p">)</span>
+
+        <span class="n">view_menu</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Gtk</span><span class="o">.</span><span class="n">SeparatorMenuItem</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__create_check_menu</span><span class="p">(</span><span class="n">_</span><span class="p">(</span><span class="s2">&quot;Show Grid&quot;</span><span class="p">),</span> <span class="s2">&quot;&lt;Control&gt;g&quot;</span><span class="p">,</span> <span class="n">view_menu</span><span class="p">,</span> <span class="n">mc</span><span class="o">.</span><span class="n">show_grid</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_menu_category</span><span class="p">(</span><span class="n">_</span><span class="p">(</span><span class="s2">&quot;View&quot;</span><span class="p">),</span> <span class="n">view_menu</span><span class="p">)</span>
+
+        <span class="c1"># -------------------------- Insert -------------------------------------</span>
+        <span class="c1"># Cria sub menu</span>
+        <span class="n">insert_menu</span> <span class="o">=</span> <span class="n">Gtk</span><span class="o">.</span><span class="n">Menu</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">block_menu</span> <span class="o">=</span> <span class="n">Gtk</span><span class="o">.</span><span class="n">Menu</span><span class="p">()</span>
+        <span class="n">blocks</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_menu</span><span class="p">(</span><span class="n">_</span><span class="p">(</span><span class="s2">&quot;Block&quot;</span><span class="p">),</span> <span class="bp">None</span><span class="p">,</span> <span class="n">insert_menu</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
+        <span class="n">blocks</span><span class="o">.</span><span class="n">set_submenu</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">block_menu</span><span class="p">)</span>
+        <span class="n">insert_menu</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Gtk</span><span class="o">.</span><span class="n">SeparatorMenuItem</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">create_menu</span><span class="p">(</span><span class="n">_</span><span class="p">(</span><span class="s2">&quot;Coment&quot;</span><span class="p">),</span> <span class="bp">None</span><span class="p">,</span> <span class="n">insert_menu</span><span class="p">,</span> <span class="n">mc</span><span class="o">.</span><span class="n">add_comment</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_menu_category</span><span class="p">(</span><span class="n">_</span><span class="p">(</span><span class="s2">&quot;Insert&quot;</span><span class="p">),</span> <span class="n">insert_menu</span><span class="p">)</span>
+
+        <span class="c1"># -------------------------- Process --------------------------------</span>
+        <span class="n">process_menu</span> <span class="o">=</span> <span class="n">Gtk</span><span class="o">.</span><span class="n">Menu</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">create_menu</span><span class="p">(</span><span class="n">_</span><span class="p">(</span><span class="s2">&quot;Run&quot;</span><span class="p">),</span> <span class="s2">&quot;&lt;Control&gt;R&quot;</span><span class="p">,</span> <span class="n">process_menu</span><span class="p">,</span> <span class="n">mc</span><span class="o">.</span><span class="n">run</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">create_menu</span><span class="p">(</span><span class="n">_</span><span class="p">(</span><span class="s2">&quot;Save Source&quot;</span><span class="p">),</span> <span class="bp">None</span><span class="p">,</span>
+                           <span class="n">process_menu</span><span class="p">,</span> <span class="n">mc</span><span class="o">.</span><span class="n">save_source</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">create_menu</span><span class="p">(</span><span class="n">_</span><span class="p">(</span><span class="s2">&quot;View Source&quot;</span><span class="p">),</span> <span class="bp">None</span><span class="p">,</span>
+                           <span class="n">process_menu</span><span class="p">,</span> <span class="n">mc</span><span class="o">.</span><span class="n">view_source</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_menu_category</span><span class="p">(</span><span class="n">_</span><span class="p">(</span><span class="s2">&quot;Process&quot;</span><span class="p">),</span> <span class="n">process_menu</span><span class="p">)</span>
+
+        <span class="c1"># -------------------------- Help --------------------------------</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">help_menu</span> <span class="o">=</span> <span class="n">Gtk</span><span class="o">.</span><span class="n">Menu</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">example_menu</span> <span class="o">=</span> <span class="n">Gtk</span><span class="o">.</span><span class="n">Menu</span><span class="p">()</span>
+        <span class="n">examples</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_menu</span><span class="p">(</span><span class="n">_</span><span class="p">(</span><span class="s2">&quot;Example&quot;</span><span class="p">),</span> <span class="bp">None</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">help_menu</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
+        <span class="n">examples</span><span class="o">.</span><span class="n">set_submenu</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">example_menu</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">help_menu</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Gtk</span><span class="o">.</span><span class="n">SeparatorMenuItem</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">create_menu</span><span class="p">(</span><span class="n">_</span><span class="p">(</span><span class="s2">&quot;About&quot;</span><span class="p">),</span> <span class="bp">None</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">help_menu</span><span class="p">,</span> <span class="n">mc</span><span class="o">.</span><span class="n">about</span><span class="p">)</span>
+
+    <span class="c1"># ----------------------------------------------------------------------</span>
+<div class="viewcode-block" id="Menu.add_help"><a class="viewcode-back" href="../../../mosaicode.GUI.html#mosaicode.GUI.menu.Menu.add_help">[docs]</a>    <span class="k">def</span> <span class="nf">add_help</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_menu_category</span><span class="p">(</span><span class="n">_</span><span class="p">(</span><span class="s2">&quot;Help&quot;</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">help_menu</span><span class="p">)</span></div>
+
+    <span class="c1"># ----------------------------------------------------------------------</span>
+<div class="viewcode-block" id="Menu.create_menu"><a class="viewcode-back" href="../../../mosaicode.GUI.html#mosaicode.GUI.menu.Menu.create_menu">[docs]</a>    <span class="k">def</span> <span class="nf">create_menu</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">accel</span><span class="p">,</span> <span class="n">menu</span><span class="p">,</span> <span class="n">action</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method create the menu</span>
+<span class="sd">            Parameters:</span>
+<span class="sd">                * **name** (:class:`str&lt;str&gt;`): Name the menu.</span>
+<span class="sd">                * **accel** (:class:`str&lt;str&gt;`):</span>
+<span class="sd">                menu(Gtk.Menu): GTK.Menu().</span>
+<span class="sd">                action(Objeto): Instance.</span>
+<span class="sd">            Returns:</span>
+<span class="sd">                Return menu.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">item</span> <span class="o">=</span> <span class="n">Gtk</span><span class="o">.</span><span class="n">MenuItem</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">accel</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">key</span><span class="p">,</span> <span class="n">mod</span> <span class="o">=</span> <span class="n">Gtk</span><span class="o">.</span><span class="n">accelerator_parse</span><span class="p">(</span><span class="n">accel</span><span class="p">)</span>
+            <span class="n">item</span><span class="o">.</span><span class="n">add_accelerator</span><span class="p">(</span>
+                <span class="s2">&quot;activate&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">accel_group</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">mod</span><span class="p">,</span> <span class="n">Gtk</span><span class="o">.</span><span class="n">AccelFlags</span><span class="o">.</span><span class="n">VISIBLE</span><span class="p">)</span>
+        <span class="n">menu</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">action</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">item</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s2">&quot;activate&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__menu_clicked</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">actions</span><span class="p">[</span><span class="n">item</span><span class="p">]</span> <span class="o">=</span> <span class="n">action</span>
+        <span class="k">return</span> <span class="n">item</span></div>
+
+    <span class="c1"># ----------------------------------------------------------------------</span>
+    <span class="k">def</span> <span class="nf">__create_check_menu</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">accel</span><span class="p">,</span> <span class="n">menu</span><span class="p">,</span> <span class="n">action</span><span class="p">):</span>
+        <span class="n">item</span> <span class="o">=</span> <span class="n">Gtk</span><span class="o">.</span><span class="n">CheckMenuItem</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">accel</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">key</span><span class="p">,</span> <span class="n">mod</span> <span class="o">=</span> <span class="n">Gtk</span><span class="o">.</span><span class="n">accelerator_parse</span><span class="p">(</span><span class="n">accel</span><span class="p">)</span>
+            <span class="n">item</span><span class="o">.</span><span class="n">add_accelerator</span><span class="p">(</span>
+                <span class="s2">&quot;activate&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">accel_group</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">mod</span><span class="p">,</span> <span class="n">Gtk</span><span class="o">.</span><span class="n">AccelFlags</span><span class="o">.</span><span class="n">VISIBLE</span><span class="p">)</span>
+        <span class="n">menu</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">action</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">item</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s2">&quot;activate&quot;</span><span class="p">,</span> <span class="n">action</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">actions</span><span class="p">[</span><span class="n">item</span><span class="p">]</span> <span class="o">=</span> <span class="n">action</span>
+        <span class="k">return</span> <span class="n">item</span>
+
+    <span class="c1"># ----------------------------------------------------------------------</span>
+<div class="viewcode-block" id="Menu.add_menu_category"><a class="viewcode-back" href="../../../mosaicode.GUI.html#mosaicode.GUI.menu.Menu.add_menu_category">[docs]</a>    <span class="k">def</span> <span class="nf">add_menu_category</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">submenu</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method add a category in menu.</span>
+
+<span class="sd">            Parameters:</span>
+<span class="sd">                * **name** (:class:`str&lt;str&gt;`):</span>
+<span class="sd">                * **submenu** (:class:`str&lt;str&gt;`):</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">menu_item</span> <span class="o">=</span> <span class="n">Gtk</span><span class="o">.</span><span class="n">MenuItem</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+        <span class="n">menu_item</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+        <span class="n">menu_item</span><span class="o">.</span><span class="n">set_submenu</span><span class="p">(</span><span class="n">submenu</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">menu_item</span><span class="p">)</span></div>
+
+    <span class="c1"># ----------------------------------------------------------------------</span>
+    <span class="k">def</span> <span class="nf">__menu_clicked</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">widget</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method monitors if the menu was cliked.</span>
+
+<span class="sd">            Parameters:</span>
+<span class="sd">                widget:</span>
+<span class="sd">                data:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">actions</span><span class="p">[</span><span class="n">widget</span><span class="p">]()</span>
+
+    <span class="c1"># ----------------------------------------------------------------------</span>
+    <span class="k">def</span> <span class="nf">__load_recent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">widget</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method monitors the lasts files loaded.</span>
+
+<span class="sd">            Parameters:</span>
+<span class="sd">                widget:</span>
+<span class="sd">                data:</span>
+<span class="sd">            Returns:</span>
+<span class="sd">                None.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">main_window</span><span class="o">.</span><span class="n">main_control</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">widget</span><span class="o">.</span><span class="n">get_label</span><span class="p">())</span>
+
+    <span class="c1"># ----------------------------------------------------------------------</span>
+    <span class="k">def</span> <span class="nf">__get_child_by_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">container</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">container</span><span class="o">.</span><span class="n">get_children</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">child</span><span class="o">.</span><span class="n">get_name</span><span class="p">()</span> <span class="o">==</span> <span class="n">name</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">child</span>
+        <span class="k">return</span> <span class="bp">None</span>
+
+    <span class="c1"># ----------------------------------------------------------------------</span>
+<div class="viewcode-block" id="Menu.update_blocks"><a class="viewcode-back" href="../../../mosaicode.GUI.html#mosaicode.GUI.menu.Menu.update_blocks">[docs]</a>    <span class="k">def</span> <span class="nf">update_blocks</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">blocks</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">widget</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">block_menu</span><span class="o">.</span><span class="n">get_children</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">block_menu</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">widget</span><span class="p">)</span>
+
+        <span class="n">block_list</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="c1"># Copy the list to sort</span>
+        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">blocks</span><span class="p">:</span>
+            <span class="n">instance</span> <span class="o">=</span> <span class="n">blocks</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+            <span class="n">block_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">instance</span><span class="p">)</span>
+
+        <span class="c1"># time to populate</span>
+        <span class="k">for</span> <span class="n">block</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">block_list</span><span class="p">):</span>
+            <span class="c1"># first, the language submenu</span>
+            <span class="n">language_menu_item</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__get_child_by_name</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">block_menu</span><span class="p">,</span> <span class="n">block</span><span class="o">.</span><span class="n">language</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">language_menu_item</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+                <span class="n">language_menu_item</span> <span class="o">=</span> <span class="n">Gtk</span><span class="o">.</span><span class="n">MenuItem</span><span class="p">(</span><span class="n">block</span><span class="o">.</span><span class="n">language</span><span class="p">)</span>
+                <span class="n">language_menu_item</span><span class="o">.</span><span class="n">set_name</span><span class="p">(</span><span class="n">block</span><span class="o">.</span><span class="n">language</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">block_menu</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">language_menu_item</span><span class="p">)</span>
+                <span class="n">language_menu</span> <span class="o">=</span> <span class="n">Gtk</span><span class="o">.</span><span class="n">Menu</span><span class="p">()</span>
+                <span class="n">language_menu_item</span><span class="o">.</span><span class="n">set_submenu</span><span class="p">(</span><span class="n">language_menu</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">language_menu</span> <span class="o">=</span> <span class="n">language_menu_item</span><span class="o">.</span><span class="n">get_submenu</span><span class="p">()</span>
+
+            <span class="n">framework_menu_item</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__get_child_by_name</span><span class="p">(</span><span class="n">language_menu</span><span class="p">,</span> <span class="n">block</span><span class="o">.</span><span class="n">framework</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">framework_menu_item</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+                <span class="n">framework_menu_item</span> <span class="o">=</span> <span class="n">Gtk</span><span class="o">.</span><span class="n">MenuItem</span><span class="p">(</span><span class="n">block</span><span class="o">.</span><span class="n">framework</span><span class="p">)</span>
+                <span class="n">framework_menu_item</span><span class="o">.</span><span class="n">set_name</span><span class="p">(</span><span class="n">block</span><span class="o">.</span><span class="n">framework</span><span class="p">)</span>
+                <span class="n">language_menu</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">framework_menu_item</span><span class="p">)</span>
+                <span class="n">framework_menu</span> <span class="o">=</span> <span class="n">Gtk</span><span class="o">.</span><span class="n">Menu</span><span class="p">()</span>
+                <span class="n">framework_menu_item</span><span class="o">.</span><span class="n">set_submenu</span><span class="p">(</span><span class="n">framework_menu</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">framework_menu</span> <span class="o">=</span> <span class="n">framework_menu_item</span><span class="o">.</span><span class="n">get_submenu</span><span class="p">()</span>
+
+            <span class="n">group_menu_item</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__get_child_by_name</span><span class="p">(</span><span class="n">framework_menu</span><span class="p">,</span> <span class="n">block</span><span class="o">.</span><span class="n">group</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">group_menu_item</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+                <span class="n">group_menu_item</span> <span class="o">=</span> <span class="n">Gtk</span><span class="o">.</span><span class="n">MenuItem</span><span class="p">(</span><span class="n">block</span><span class="o">.</span><span class="n">group</span><span class="p">)</span>
+                <span class="n">group_menu_item</span><span class="o">.</span><span class="n">set_name</span><span class="p">(</span><span class="n">block</span><span class="o">.</span><span class="n">group</span><span class="p">)</span>
+                <span class="n">framework_menu</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">group_menu_item</span><span class="p">)</span>
+                <span class="n">group_menu</span> <span class="o">=</span> <span class="n">Gtk</span><span class="o">.</span><span class="n">Menu</span><span class="p">()</span>
+                <span class="n">group_menu_item</span><span class="o">.</span><span class="n">set_submenu</span><span class="p">(</span><span class="n">group_menu</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">group_menu</span> <span class="o">=</span> <span class="n">group_menu_item</span><span class="o">.</span><span class="n">get_submenu</span><span class="p">()</span>
+
+            <span class="n">menu_item</span> <span class="o">=</span> <span class="n">Gtk</span><span class="o">.</span><span class="n">MenuItem</span><span class="p">(</span><span class="n">block</span><span class="o">.</span><span class="n">type</span><span class="p">)</span>
+            <span class="n">group_menu</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">menu_item</span><span class="p">)</span>
+            <span class="n">menu_item</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s2">&quot;activate&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__add_block</span><span class="p">,</span> <span class="n">block</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">block_menu</span><span class="o">.</span><span class="n">show_all</span><span class="p">()</span></div>
+
+    <span class="c1"># ----------------------------------------------------------------------</span>
+    <span class="k">def</span> <span class="nf">__add_block</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">widget</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method load a example.</span>
+
+<span class="sd">            Parameters:</span>
+<span class="sd">                widget:</span>
+<span class="sd">                data:</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">main_window</span><span class="o">.</span><span class="n">main_control</span><span class="o">.</span><span class="n">add_block</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+    <span class="c1"># ----------------------------------------------------------------------</span>
+<div class="viewcode-block" id="Menu.update_examples"><a class="viewcode-back" href="../../../mosaicode.GUI.html#mosaicode.GUI.menu.Menu.update_examples">[docs]</a>    <span class="k">def</span> <span class="nf">update_examples</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">list_of_examples</span><span class="p">):</span>
+
+        <span class="k">for</span> <span class="n">widget</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">example_menu</span><span class="o">.</span><span class="n">get_children</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">example_menu</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">widget</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">example</span> <span class="ow">in</span> <span class="n">list_of_examples</span><span class="p">:</span>
+            <span class="n">menu_item</span> <span class="o">=</span> <span class="n">Gtk</span><span class="o">.</span><span class="n">MenuItem</span><span class="p">(</span><span class="n">example</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">pop</span><span class="p">())</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">example_menu</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">menu_item</span><span class="p">)</span>
+            <span class="n">menu_item</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s2">&quot;activate&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__load_example</span><span class="p">,</span> <span class="n">example</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">example_menu</span><span class="o">.</span><span class="n">show_all</span><span class="p">()</span></div>
+
+    <span class="c1"># ----------------------------------------------------------------------</span>
+    <span class="k">def</span> <span class="nf">__load_example</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">widget</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method load a example.</span>
+
+<span class="sd">            Parameters:</span>
+<span class="sd">                widget:</span>
+<span class="sd">                data:</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">main_window</span><span class="o">.</span><span class="n">main_control</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+
+    <span class="c1"># ----------------------------------------------------------------------</span>
+<div class="viewcode-block" id="Menu.update_recent_files"><a class="viewcode-back" href="../../../mosaicode.GUI.html#mosaicode.GUI.menu.Menu.update_recent_files">[docs]</a>    <span class="k">def</span> <span class="nf">update_recent_files</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">list_of_recent_files</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method update recent files.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">for</span> <span class="n">widget</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">recent_files_menu</span><span class="o">.</span><span class="n">get_children</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">recent_files_menu</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">widget</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">recent_file</span> <span class="ow">in</span> <span class="n">list_of_recent_files</span><span class="p">:</span>
+            <span class="n">menu_item</span> <span class="o">=</span> <span class="n">Gtk</span><span class="o">.</span><span class="n">MenuItem</span><span class="p">(</span><span class="n">recent_file</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">recent_files_menu</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">menu_item</span><span class="p">)</span>
+            <span class="n">menu_item</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s2">&quot;activate&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__load_recent</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">recent_files_menu</span><span class="o">.</span><span class="n">show_all</span><span class="p">()</span></div></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, Flávio.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../',
+            VERSION:'2.0.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
