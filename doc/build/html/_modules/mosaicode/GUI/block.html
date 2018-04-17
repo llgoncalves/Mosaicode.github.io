@@ -1,0 +1,658 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>mosaicode.GUI.block &mdash; mosaicode 2.0.0 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="mosaicode 2.0.0 documentation" href="../../../index.html"/>
+        <link rel="up" title="Module code" href="../../index.html"/> 
+
+  
+  <script src="../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> mosaicode
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                2.0.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../user-documentation/getting-started/index.html">Getting started</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">mosaicode</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>mosaicode.GUI.block</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for mosaicode.GUI.block</h1><div class="highlight"><pre>
+<span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="c1"># noqa: E402</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">This module contains the Block class.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">gi</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="n">gi</span><span class="o">.</span><span class="n">require_version</span><span class="p">(</span><span class="s1">&#39;Gtk&#39;</span><span class="p">,</span> <span class="s1">&#39;3.0&#39;</span><span class="p">)</span>
+<span class="n">gi</span><span class="o">.</span><span class="n">require_version</span><span class="p">(</span><span class="s1">&#39;GooCanvas&#39;</span><span class="p">,</span> <span class="s1">&#39;2.0&#39;</span><span class="p">)</span>
+<span class="n">gi</span><span class="o">.</span><span class="n">require_version</span><span class="p">(</span><span class="s1">&#39;PangoCairo&#39;</span><span class="p">,</span> <span class="s1">&#39;1.0&#39;</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">gi.repository</span> <span class="kn">import</span> <span class="n">Gtk</span>
+<span class="kn">from</span> <span class="nn">gi.repository</span> <span class="kn">import</span> <span class="n">Gdk</span>
+<span class="kn">from</span> <span class="nn">gi.repository</span> <span class="kn">import</span> <span class="n">GooCanvas</span>
+<span class="kn">from</span> <span class="nn">gi.repository</span> <span class="kn">import</span> <span class="n">GdkPixbuf</span>
+<span class="kn">from</span> <span class="nn">gi.repository</span> <span class="kn">import</span> <span class="n">Pango</span>
+<span class="kn">from</span> <span class="nn">mosaicode.system</span> <span class="kn">import</span> <span class="n">System</span>
+<span class="kn">from</span> <span class="nn">mosaicode.model.blockmodel</span> <span class="kn">import</span> <span class="n">BlockModel</span>
+<span class="kn">from</span> <span class="nn">mosaicode.model.port</span> <span class="kn">import</span> <span class="n">Port</span>
+
+<span class="n">WIDTH_DEFAULT</span> <span class="o">=</span> <span class="mi">112</span>
+<span class="n">HEIGHT_DEFAULT</span> <span class="o">=</span> <span class="mi">60</span>
+<span class="n">INPUT_HEIGHT</span> <span class="o">=</span> <span class="mi">12</span>
+<span class="n">RADIUS</span> <span class="o">=</span> <span class="mi">25</span>
+
+
+
+<div class="viewcode-block" id="Block"><a class="viewcode-back" href="../../../mosaicode.GUI.html#mosaicode.GUI.block.Block">[docs]</a><span class="k">class</span> <span class="nc">Block</span><span class="p">(</span><span class="n">GooCanvas</span><span class="o">.</span><span class="n">CanvasGroup</span><span class="p">,</span> <span class="n">BlockModel</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This class contains methods related the Block class</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># ----------------------------------------------------------------------</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">diagram</span><span class="p">,</span> <span class="n">block</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method is the constuctor.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">GooCanvas</span><span class="o">.</span><span class="n">CanvasGroup</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="n">BlockModel</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">block</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">diagram</span> <span class="o">=</span> <span class="n">diagram</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">remember_x</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">remember_y</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">__widgets</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">focus</span> <span class="o">=</span> <span class="bp">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">has_flow</span> <span class="o">=</span> <span class="bp">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">is_selected</span> <span class="o">=</span> <span class="bp">False</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">width</span> <span class="o">=</span> <span class="n">WIDTH_DEFAULT</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s2">&quot;button-press-event&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__on_button_press</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s2">&quot;motion-notify-event&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__on_motion_notify</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s2">&quot;enter-notify-event&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__on_enter_notify</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s2">&quot;leave-notify-event&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__on_leave_notify</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">move</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">)),</span> <span class="nb">int</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">)))</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">height</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(((</span><span class="bp">self</span><span class="o">.</span><span class="n">maxIO</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="mi">5</span><span class="p">)</span> <span class="o">+</span>  <span class="c1"># espacamento entre ports = 5</span>
+                          <span class="p">(</span><span class="n">RADIUS</span> <span class="o">*</span> <span class="mi">2</span><span class="p">)</span> <span class="o">+</span>
+                          <span class="c1"># tirando a margem superior e inferior</span>
+                          <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">maxIO</span> <span class="o">*</span> <span class="n">INPUT_HEIGHT</span><span class="p">),</span>
+                          <span class="c1"># adicionando a altura de cada port</span>
+                          <span class="n">HEIGHT_DEFAULT</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">__draw_label</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__draw_rect</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__draw_ports</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__draw_icon</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update_flow</span><span class="p">()</span>
+
+    <span class="c1"># ----------------------------------------------------------------------</span>
+    <span class="k">def</span> <span class="nf">__on_button_press</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">canvas_item</span><span class="p">,</span> <span class="n">target_item</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method monitors when the button is pressed.</span>
+
+<span class="sd">            Parameters:</span>
+<span class="sd">                canvas_item</span>
+<span class="sd">            Returns:</span>
+<span class="sd">                * **Types** (:class:`boolean&lt;boolean&gt;`)</span>
+<span class="sd">                Indicates the button is pressed.</span>
+<span class="sd">            &quot;&quot;&quot;</span>
+        <span class="c1"># with Shift</span>
+        <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">state</span> <span class="o">==</span> <span class="n">Gdk</span><span class="o">.</span><span class="n">ModifierType</span><span class="o">.</span><span class="n">SHIFT_MASK</span> \
+                <span class="o">|</span> <span class="n">Gdk</span><span class="o">.</span><span class="n">ModifierType</span><span class="o">.</span><span class="n">MOD2_MASK</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_selected</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">is_selected</span> <span class="o">=</span> <span class="bp">False</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">is_selected</span> <span class="o">=</span> <span class="bp">True</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_selected</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">diagram</span><span class="o">.</span><span class="n">deselect_all</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">is_selected</span> <span class="o">=</span> <span class="bp">True</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">diagram</span><span class="o">.</span><span class="n">show_block_property</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+        <span class="n">Gtk</span><span class="o">.</span><span class="n">Widget</span><span class="o">.</span><span class="n">grab_focus</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">diagram</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">button</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">remember_x</span> <span class="o">=</span> <span class="n">event</span><span class="o">.</span><span class="n">x</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">remember_y</span> <span class="o">=</span> <span class="n">event</span><span class="o">.</span><span class="n">y</span>
+
+        <span class="k">elif</span> <span class="n">event</span><span class="o">.</span><span class="n">button</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">diagram</span><span class="o">.</span><span class="n">show_block_menu</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">)</span>
+            <span class="k">return</span> <span class="bp">True</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">diagram</span><span class="o">.</span><span class="n">update_flows</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">True</span>
+
+    <span class="c1"># ----------------------------------------------------------------------</span>
+    <span class="k">def</span> <span class="nf">__on_motion_notify</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">canvas_item</span><span class="p">,</span> <span class="n">target_item</span><span class="p">,</span> <span class="n">event</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method monitors the motion.</span>
+
+<span class="sd">            Parameters:</span>
+<span class="sd">                canvas_item</span>
+<span class="sd">                target_item</span>
+
+<span class="sd">            Returns:</span>
+<span class="sd">                * **Types** (:class:`boolean&lt;boolean&gt;`)</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">event</span><span class="o">.</span><span class="n">state</span> <span class="o">&amp;</span> <span class="n">Gdk</span><span class="o">.</span><span class="n">ModifierType</span><span class="o">.</span><span class="n">BUTTON1_MASK</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">False</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">diagram</span><span class="o">.</span><span class="n">curr_connector</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">False</span>
+        <span class="c1"># Get the new position and move by the difference</span>
+        <span class="n">new_x</span> <span class="o">=</span> <span class="n">event</span><span class="o">.</span><span class="n">x</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">remember_x</span>
+        <span class="n">new_y</span> <span class="o">=</span> <span class="n">event</span><span class="o">.</span><span class="n">y</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">remember_y</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">diagram</span><span class="o">.</span><span class="n">move_selected</span><span class="p">(</span><span class="n">new_x</span><span class="p">,</span> <span class="n">new_y</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">False</span>
+
+    <span class="c1"># ----------------------------------------------------------------------</span>
+    <span class="k">def</span> <span class="nf">__on_enter_notify</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">canvas_item</span><span class="p">,</span> <span class="n">target_item</span><span class="p">,</span> <span class="n">event</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method monitors the motion.</span>
+
+<span class="sd">            Parameters:</span>
+<span class="sd">                canvas_item</span>
+<span class="sd">            Returns:</span>
+<span class="sd">                * **TYpes** (:class:`boolean&lt;boolean&gt;`)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">focus</span> <span class="o">=</span> <span class="bp">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__update_state</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">False</span>
+
+    <span class="c1"># ----------------------------------------------------------------------</span>
+    <span class="k">def</span> <span class="nf">__on_leave_notify</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">canvas_item</span><span class="p">,</span> <span class="n">target_item</span><span class="p">,</span> <span class="n">event</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method monitors the motion.</span>
+
+<span class="sd">            Parameters:</span>
+<span class="sd">                canvas_item</span>
+<span class="sd">                target_item</span>
+
+<span class="sd">            Returns:</span>
+<span class="sd">                * **Types** (:class:`boolean&lt;boolean&gt;`)</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">focus</span> <span class="o">=</span> <span class="bp">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__update_state</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">False</span>
+
+    <span class="c1"># ----------------------------------------------------------------------</span>
+    <span class="k">def</span> <span class="nf">__draw_rect</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method draw a rectangle.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">rect</span> <span class="o">=</span> <span class="n">GooCanvas</span><span class="o">.</span><span class="n">CanvasRect</span><span class="p">(</span><span class="n">parent</span><span class="o">=</span><span class="bp">self</span><span class="p">,</span>
+                                    <span class="n">x</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+                                    <span class="n">y</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+                                    <span class="n">width</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">width</span><span class="p">,</span>
+                                    <span class="n">height</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">height</span><span class="p">,</span>
+                                    <span class="n">radius_x</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+                                    <span class="n">radius_y</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+                                    <span class="n">stroke_color</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span>
+                                    <span class="n">fill_color_rgba</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">get_color</span><span class="p">()</span>
+                                    <span class="p">)</span>
+        <span class="n">rect</span><span class="o">.</span><span class="n">set_property</span><span class="p">(</span><span class="s2">&quot;tooltip&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__widgets</span><span class="p">[</span><span class="s2">&quot;Rect&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">rect</span>
+
+    <span class="c1"># ----------------------------------------------------------------------</span>
+    <span class="k">def</span> <span class="nf">__draw_icon</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method draw a icon.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">text_label</span> <span class="o">=</span> <span class="s2">&quot;&lt;span font_family =&#39;Arial&#39; &quot;</span> <span class="o">+</span> \
+            <span class="s2">&quot;size = &#39;25000&#39; weight = &#39;bold&#39; &gt; &quot;</span> <span class="o">+</span> \
+            <span class="bp">self</span><span class="o">.</span><span class="n">label</span><span class="o">.</span><span class="n">title</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;&lt;/span&gt;&quot;</span>
+
+        <span class="n">icon</span> <span class="o">=</span> <span class="n">GooCanvas</span><span class="o">.</span><span class="n">CanvasText</span><span class="p">(</span><span class="n">parent</span><span class="o">=</span><span class="bp">self</span><span class="p">,</span>
+                                    <span class="n">text</span><span class="o">=</span><span class="n">text_label</span><span class="p">,</span>
+                                    <span class="n">fill_color</span><span class="o">=</span><span class="s1">&#39;white&#39;</span><span class="p">,</span>
+                                    <span class="n">anchor</span><span class="o">=</span><span class="n">GooCanvas</span><span class="o">.</span><span class="n">CanvasAnchorType</span><span class="o">.</span><span class="n">CENTER</span><span class="p">,</span>
+                                    <span class="n">x</span><span class="o">=</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">width</span> <span class="o">/</span> <span class="mi">2</span><span class="p">),</span>
+                                    <span class="n">y</span><span class="o">=</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">height</span> <span class="o">/</span> <span class="mi">2</span><span class="p">),</span>
+                                    <span class="n">use_markup</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+                                    <span class="n">stroke_color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span>
+                                    <span class="p">)</span>
+
+        <span class="n">width</span> <span class="o">=</span> <span class="n">Pango</span><span class="o">.</span><span class="n">Rectangle</span><span class="p">()</span>
+        <span class="n">width2</span> <span class="o">=</span> <span class="n">Pango</span><span class="o">.</span><span class="n">Rectangle</span><span class="p">()</span>
+
+        <span class="k">try</span><span class="p">:</span>  <span class="c1"># Compatibility version problem</span>
+            <span class="n">icon</span><span class="o">.</span><span class="n">get_natural_extents</span><span class="p">(</span><span class="n">width</span><span class="p">,</span> <span class="n">width2</span><span class="p">)</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="k">pass</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">width</span><span class="p">,</span> <span class="n">width2</span> <span class="o">=</span> <span class="n">icon</span><span class="o">.</span><span class="n">get_natural_extents</span><span class="p">()</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="k">pass</span>
+        <span class="n">text_width</span> <span class="o">=</span> <span class="n">width2</span><span class="o">.</span><span class="n">width</span> <span class="o">/</span> <span class="mi">1000</span>
+        <span class="n">oldX</span><span class="p">,</span> <span class="n">oldY</span> <span class="o">=</span> <span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">width</span> <span class="o">/</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">height</span> <span class="o">/</span> <span class="mi">2</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">width</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">text_width</span> <span class="o">+</span> <span class="mi">22</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">width</span><span class="p">)</span>
+        <span class="n">icon</span><span class="o">.</span><span class="n">translate</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">width</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="o">-</span> <span class="n">oldX</span><span class="p">,</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">height</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span> <span class="o">-</span> <span class="n">oldY</span><span class="p">)</span>
+
+    <span class="c1"># ----------------------------------------------------------------------</span>
+    <span class="k">def</span> <span class="nf">__draw_label</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method draw the label.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">text_label</span> <span class="o">=</span> <span class="s2">&quot;&lt;span font_family =&#39;Arial&#39; &quot;</span> <span class="o">+</span> \
+            <span class="s2">&quot;size = &#39;10000&#39; weight = &#39;ultralight&#39;&gt; &quot;</span> <span class="o">+</span> \
+            <span class="bp">self</span><span class="o">.</span><span class="n">label</span> <span class="o">+</span> <span class="s2">&quot;&lt;/span&gt;&quot;</span>
+
+        <span class="n">label</span> <span class="o">=</span> <span class="n">GooCanvas</span><span class="o">.</span><span class="n">CanvasText</span><span class="p">(</span><span class="n">parent</span><span class="o">=</span><span class="bp">self</span><span class="p">,</span>
+                                     <span class="n">text</span><span class="o">=</span><span class="n">text_label</span><span class="p">,</span>
+                                     <span class="n">fill_color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span>
+                                     <span class="n">anchor</span><span class="o">=</span><span class="n">GooCanvas</span><span class="o">.</span><span class="n">CanvasAnchorType</span><span class="o">.</span><span class="n">CENTER</span><span class="p">,</span>
+                                     <span class="n">x</span><span class="o">=</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">width</span> <span class="o">/</span> <span class="mi">2</span><span class="p">),</span>
+                                     <span class="n">y</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">),</span>
+                                     <span class="n">use_markup</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+                                     <span class="n">stroke_color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span>
+                                     <span class="p">)</span>
+
+        <span class="n">width</span> <span class="o">=</span> <span class="n">Pango</span><span class="o">.</span><span class="n">Rectangle</span><span class="p">()</span>
+        <span class="n">width2</span> <span class="o">=</span> <span class="n">Pango</span><span class="o">.</span><span class="n">Rectangle</span><span class="p">()</span>
+
+        <span class="k">try</span><span class="p">:</span>  <span class="c1"># Compatibility version problem</span>
+            <span class="n">label</span><span class="o">.</span><span class="n">get_natural_extents</span><span class="p">(</span><span class="n">width</span><span class="p">,</span> <span class="n">width2</span><span class="p">)</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="k">pass</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">width</span><span class="p">,</span> <span class="n">width2</span> <span class="o">=</span> <span class="n">label</span><span class="o">.</span><span class="n">get_natural_extents</span><span class="p">()</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="k">pass</span>
+        <span class="n">text_width</span> <span class="o">=</span> <span class="n">width2</span><span class="o">.</span><span class="n">width</span> <span class="o">/</span> <span class="mi">1000</span>
+        <span class="n">oldX</span><span class="p">,</span> <span class="n">oldY</span> <span class="o">=</span> <span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">width</span> <span class="o">/</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">height</span> <span class="o">-</span> <span class="mi">10</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">width</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">text_width</span> <span class="o">+</span> <span class="mi">22</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">width</span><span class="p">)</span>
+        <span class="n">label</span><span class="o">.</span><span class="n">translate</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">width</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span> <span class="o">-</span> <span class="n">oldX</span><span class="p">,</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">height</span> <span class="o">-</span> <span class="mi">10</span><span class="p">)</span> <span class="o">-</span> <span class="n">oldY</span><span class="p">)</span>
+
+    <span class="c1"># ----------------------------------------------------------------------</span>
+    <span class="k">def</span> <span class="nf">__draw_ports</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method draws the ports.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">port</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">ports</span><span class="p">:</span>
+            <span class="n">text_name</span> <span class="o">=</span> <span class="s2">&quot;&lt;span font_family =&#39;Arial&#39; size = &#39;7000&#39; weight = &#39;ultralight&#39;&gt;{&quot;</span> <span class="o">+</span> \
+                <span class="s2">&quot;&lt;span color = &#39;&quot;</span> <span class="o">+</span> \
+                <span class="n">port</span><span class="o">.</span><span class="n">color</span> <span class="o">+</span> <span class="s2">&quot;&#39;&gt;&quot;</span> <span class="o">+</span> \
+                <span class="n">port</span><span class="o">.</span><span class="n">hint</span> <span class="o">+</span> <span class="s2">&quot;&lt;/span&gt;}&lt;/span&gt;&quot;</span>
+            <span class="k">if</span> <span class="n">port</span><span class="o">.</span><span class="n">is_input</span><span class="p">():</span>
+                <span class="n">x</span> <span class="o">=</span> <span class="mi">2</span>
+                <span class="n">alignment</span> <span class="o">=</span> <span class="n">Pango</span><span class="o">.</span><span class="n">Alignment</span><span class="o">.</span><span class="n">LEFT</span>
+                <span class="n">anchor</span><span class="o">=</span><span class="n">GooCanvas</span><span class="o">.</span><span class="n">CanvasAnchorType</span><span class="o">.</span><span class="n">WEST</span>
+                <span class="n">press_event</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__on_input_press</span>
+                <span class="n">release_event</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__on_input_release</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">x</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">width</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+                <span class="n">alignment</span> <span class="o">=</span> <span class="n">Pango</span><span class="o">.</span><span class="n">Alignment</span><span class="o">.</span><span class="n">RIGHT</span>
+                <span class="n">anchor</span> <span class="o">=</span> <span class="n">GooCanvas</span><span class="o">.</span><span class="n">CanvasAnchorType</span><span class="o">.</span><span class="n">EAST</span>
+                <span class="n">press_event</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__on_output_press</span>
+                <span class="n">release_event</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__on_output_release</span>
+
+            <span class="n">text</span> <span class="o">=</span> <span class="n">GooCanvas</span><span class="o">.</span><span class="n">CanvasText</span><span class="p">(</span><span class="n">parent</span><span class="o">=</span><span class="bp">self</span><span class="p">,</span>
+                                 <span class="n">text</span><span class="o">=</span><span class="n">text_name</span><span class="p">,</span>
+                                 <span class="n">fill_color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span>
+                                 <span class="n">anchor</span><span class="o">=</span><span class="n">anchor</span><span class="p">,</span>
+                                 <span class="n">alignment</span><span class="o">=</span><span class="n">alignment</span><span class="p">,</span>
+                                 <span class="n">x</span><span class="o">=</span><span class="n">x</span><span class="p">,</span>
+                                 <span class="n">y</span><span class="o">=</span><span class="p">(</span><span class="n">RADIUS</span> <span class="o">+</span>  <span class="c1"># upper border</span>
+                                     <span class="p">(</span><span class="n">port</span><span class="o">.</span><span class="n">type_index</span> <span class="o">*</span> <span class="mi">5</span><span class="p">)</span> <span class="o">+</span>  <span class="c1"># spacing betwen ports</span>
+                                      <span class="n">port</span><span class="o">.</span><span class="n">type_index</span> <span class="o">*</span> <span class="n">INPUT_HEIGHT</span><span class="p">),</span>  <span class="c1"># prev ports</span>
+                                 <span class="n">use_markup</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+                                 <span class="n">tooltip</span><span class="o">=</span><span class="n">port</span><span class="o">.</span><span class="n">label</span>
+                                 <span class="p">)</span>
+            <span class="n">text</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s2">&quot;button-press-event&quot;</span><span class="p">,</span> <span class="n">press_event</span> <span class="p">,</span> <span class="n">port</span><span class="p">)</span>
+            <span class="n">text</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s2">&quot;button-release-event&quot;</span><span class="p">,</span> <span class="n">release_event</span><span class="p">,</span> <span class="n">port</span><span class="p">)</span>
+
+    <span class="c1"># ----------------------------------------------------------------------</span>
+    <span class="k">def</span> <span class="nf">__on_input_press</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">canvas_item</span><span class="p">,</span> <span class="n">target_item</span><span class="p">,</span> <span class="n">event</span><span class="p">,</span> <span class="n">port</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method return true if a input was connected.</span>
+
+<span class="sd">            Parameters:</span>
+<span class="sd">                * **canvas_item**</span>
+<span class="sd">                * **target_item**</span>
+<span class="sd">                * **event**</span>
+<span class="sd">            Returns:</span>
+<span class="sd">                * **Types** (:class:`boolean&lt;boolean&gt;`): Indicates the input as connected.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">diagram</span><span class="o">.</span><span class="n">end_connection</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">port</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">True</span>
+
+    <span class="c1"># ----------------------------------------------------------------------</span>
+    <span class="k">def</span> <span class="nf">__on_input_release</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">canvas_item</span><span class="p">,</span> <span class="n">target_item</span><span class="p">,</span> <span class="n">event</span><span class="p">,</span> <span class="n">args</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method monitors the input release.</span>
+
+<span class="sd">            Parameters:</span>
+<span class="sd">                * **canvas_item**</span>
+<span class="sd">                * **target_item**</span>
+<span class="sd">                * **event **</span>
+<span class="sd">            Return:</span>
+<span class="sd">                * **Types** (:class:`boolean&lt;boolean&gt;`)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">True</span>
+
+    <span class="c1"># ----------------------------------------------------------------------</span>
+    <span class="k">def</span> <span class="nf">__on_output_press</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">canvas_item</span><span class="p">,</span> <span class="n">target_item</span><span class="p">,</span> <span class="n">event</span><span class="p">,</span> <span class="n">port</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method monitors the output state, monitors if output was pressed.</span>
+
+<span class="sd">            Parameters:</span>
+<span class="sd">                canvas_item</span>
+<span class="sd">                target_item</span>
+<span class="sd">                event</span>
+<span class="sd">                args</span>
+<span class="sd">            Returns:</span>
+<span class="sd">                * **Types** (:class:`boolean&lt;boolean&gt;`)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">diagram</span><span class="o">.</span><span class="n">start_connection</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">port</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">True</span>
+
+    <span class="c1"># ----------------------------------------------------------------------</span>
+    <span class="k">def</span> <span class="nf">__on_output_release</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">canvas_item</span><span class="p">,</span> <span class="n">target_item</span><span class="p">,</span> <span class="n">event</span><span class="p">,</span> <span class="n">args</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method monitors the output state, monitors if output was release.</span>
+
+<span class="sd">            Returns:</span>
+<span class="sd">                * **Types** (:class:`boolean&lt;boolean&gt;`)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">True</span>
+
+    <span class="c1"># ----------------------------------------------------------------------</span>
+<div class="viewcode-block" id="Block.move"><a class="viewcode-back" href="../../../mosaicode.GUI.html#mosaicode.GUI.block.Block.move">[docs]</a>    <span class="k">def</span> <span class="nf">move</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method move a block.</span>
+
+<span class="sd">            Parameters:</span>
+<span class="sd">                * **(x,y)** (:class:`float&lt;float&gt;`)</span>
+<span class="sd">            Returns:</span>
+<span class="sd">                * **Types** (:class:`float&lt;float&gt;`)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">new_x</span> <span class="o">=</span> <span class="n">x</span> <span class="o">-</span> <span class="p">(</span><span class="n">x</span> <span class="o">%</span> <span class="n">System</span><span class="o">.</span><span class="n">properties</span><span class="o">.</span><span class="n">grid</span><span class="p">)</span>
+        <span class="n">new_y</span> <span class="o">=</span> <span class="n">y</span> <span class="o">-</span> <span class="p">(</span><span class="n">y</span> <span class="o">%</span> <span class="n">System</span><span class="o">.</span><span class="n">properties</span><span class="o">.</span><span class="n">grid</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">translate</span><span class="p">(</span><span class="n">new_x</span><span class="p">,</span> <span class="n">new_y</span><span class="p">)</span></div>
+
+    <span class="c1"># ----------------------------------------------------------------------</span>
+<div class="viewcode-block" id="Block.adjust_position"><a class="viewcode-back" href="../../../mosaicode.GUI.html#mosaicode.GUI.block.Block.adjust_position">[docs]</a>    <span class="k">def</span> <span class="nf">adjust_position</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">position</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_position</span><span class="p">()</span>
+        <span class="n">grid</span> <span class="o">=</span> <span class="n">System</span><span class="o">.</span><span class="n">properties</span><span class="o">.</span><span class="n">grid</span>
+        <span class="n">new_x</span> <span class="o">=</span> <span class="n">position</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">position</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">%</span> <span class="n">grid</span>
+        <span class="n">new_y</span> <span class="o">=</span> <span class="n">position</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">position</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">%</span> <span class="n">grid</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">translate</span><span class="p">(</span><span class="n">new_x</span> <span class="o">-</span> <span class="n">position</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">new_y</span> <span class="o">-</span> <span class="n">position</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span></div>
+
+    <span class="c1"># ----------------------------------------------------------------------</span>
+<div class="viewcode-block" id="Block.get_position"><a class="viewcode-back" href="../../../mosaicode.GUI.html#mosaicode.GUI.block.Block.get_position">[docs]</a>    <span class="k">def</span> <span class="nf">get_position</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method get position the block.</span>
+
+<span class="sd">             Returns:</span>
+<span class="sd">                * **Types** (:class:`float&lt;float&gt;`)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">isSet</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">scale</span><span class="p">,</span> <span class="n">rotation</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_simple_transform</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span></div>
+
+    <span class="c1"># ----------------------------------------------------------------------</span>
+<div class="viewcode-block" id="Block.set_properties"><a class="viewcode-back" href="../../../mosaicode.GUI.html#mosaicode.GUI.block.Block.set_properties">[docs]</a>    <span class="k">def</span> <span class="nf">set_properties</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method set properties of each block.</span>
+
+<span class="sd">            Parameters:</span>
+<span class="sd">                * **data**</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">diagram</span><span class="o">.</span><span class="n">do</span><span class="p">(</span><span class="s2">&quot;Set block property&quot;</span><span class="p">)</span>
+        <span class="n">BlockModel</span><span class="o">.</span><span class="n">set_properties</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span></div>
+
+    <span class="c1"># ----------------------------------------------------------------------</span>
+<div class="viewcode-block" id="Block.get_properties"><a class="viewcode-back" href="../../../mosaicode.GUI.html#mosaicode.GUI.block.Block.get_properties">[docs]</a>    <span class="k">def</span> <span class="nf">get_properties</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method get properties of each block.</span>
+
+<span class="sd">            Returns:</span>
+<span class="sd">                * **Types** ()</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">BlockModel</span><span class="o">.</span><span class="n">get_properties</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div>
+
+    <span class="c1"># ----------------------------------------------------------------------</span>
+<div class="viewcode-block" id="Block.update_flow"><a class="viewcode-back" href="../../../mosaicode.GUI.html#mosaicode.GUI.block.Block.update_flow">[docs]</a>    <span class="k">def</span> <span class="nf">update_flow</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method update flow.</span>
+
+<span class="sd">            Returns:</span>
+<span class="sd">                * **Types** (:class:`boolean&lt;boolean&gt;`)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">has_flow</span> <span class="o">=</span> <span class="bp">True</span>
+        <span class="n">distinct_con</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">conn</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">diagram</span><span class="o">.</span><span class="n">connectors</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">conn</span><span class="o">.</span><span class="n">input</span> <span class="o">!=</span> <span class="bp">self</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="k">if</span> <span class="n">conn</span><span class="o">.</span><span class="n">input_port</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">distinct_con</span><span class="p">:</span>
+                <span class="n">distinct_con</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">conn</span><span class="o">.</span><span class="n">input_port</span><span class="p">)</span>
+        <span class="n">in_count</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">port</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">ports</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">port</span><span class="o">.</span><span class="n">is_input</span><span class="p">():</span>
+                <span class="n">in_count</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">distinct_con</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">in_count</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">has_flow</span> <span class="o">=</span> <span class="bp">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__update_state</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">has_flow</span></div>
+
+    <span class="c1"># ----------------------------------------------------------------------</span>
+    <span class="k">def</span> <span class="nf">__update_state</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method update the Line state.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Not connected: Color = red</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">has_flow</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__widgets</span><span class="p">[</span><span class="s2">&quot;Rect&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">set_property</span><span class="p">(</span><span class="s2">&quot;stroke_color&quot;</span><span class="p">,</span> <span class="s1">&#39;black&#39;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__widgets</span><span class="p">[</span><span class="s2">&quot;Rect&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">set_property</span><span class="p">(</span><span class="s2">&quot;stroke_color&quot;</span><span class="p">,</span> <span class="s1">&#39;red&#39;</span><span class="p">)</span>
+
+        <span class="c1"># in focus: Line width = 3</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">focus</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__widgets</span><span class="p">[</span><span class="s2">&quot;Rect&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">set_property</span><span class="p">(</span><span class="s2">&quot;line-width&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__widgets</span><span class="p">[</span><span class="s2">&quot;Rect&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">set_property</span><span class="p">(</span><span class="s2">&quot;line-width&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+        <span class="c1"># selected: Line = dashed</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_selected</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__widgets</span><span class="p">[</span><span class="s2">&quot;Rect&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">set_property</span><span class="p">(</span>
+                <span class="s2">&quot;line_dash&quot;</span><span class="p">,</span> <span class="n">GooCanvas</span><span class="o">.</span><span class="n">CanvasLineDash</span><span class="o">.</span><span class="n">newv</span><span class="p">((</span><span class="mf">4.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">)))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__widgets</span><span class="p">[</span><span class="s2">&quot;Rect&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">set_property</span><span class="p">(</span>
+                <span class="s2">&quot;line_dash&quot;</span><span class="p">,</span> <span class="n">GooCanvas</span><span class="o">.</span><span class="n">CanvasLineDash</span><span class="o">.</span><span class="n">newv</span><span class="p">((</span><span class="mf">10.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)))</span></div>
+
+<span class="c1"># ----------------------------------------------------------------------</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, Flávio.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../',
+            VERSION:'2.0.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
