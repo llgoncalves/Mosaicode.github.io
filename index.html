@@ -7,9 +7,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-
+    
     <title>Mosaicode</title>
-
+    
     <!-- Bootstrap core CSS -->
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
@@ -44,17 +44,18 @@
             Menu <i class="fa fa-bars"></i>
         </button>
         <div class="container">
+	    <img hspace="10px" src="media/logo64.ico" width="100">
             <a class="navbar-brand" href="#page-top">Mosaicode</a>
             <div class="collapse navbar-collapse" id="navbarExample">
                 <ul class="navbar-nav ml-auto">
+		    <li class="nav-item">
+                        <a class="nav-link" href="#about">About</a>
+                    </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#video">Video</a>
                     </li>
-                    <li class="nav-item">
+		    <li class="nav-item">
                         <a class="nav-link" href="#publications">Publications</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#about">About</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#members">Members</a>
@@ -68,21 +69,38 @@
     <header class="masthead">
         <div class="container">
             <div class="intro-text">
+		<img src="media/logo.png" width="400">
                 <span class="name">Mosaicode</span>
                 <hr class="star-light">
                 <span class="skills">Visual Programming Environment</span>
             </div>
         </div>
     </header>
+    
+    <!-- About Section -->
+    <section id="about">
+        <div class="container">
+            <h3 class="text-center">About</h3>
+            <hr class="star-primary">
+            <div class="row">
+                <div class="col-lg-4 offset-lg-2">
+                    <p>Mosaicode is a visual programming environment that aims to meet the specific demands of the field of Digital Arts and generate applications for this field.</p>
+                </div>
+                <div class="col-lg-4">
+                    <p>It is aimed that this tool will help artists to develop their work in a simple and practical way.</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <!-- Video Grid Section -->
-    <section id="video">
-        <div class="container">
-            <h3 class="text-center">Video</h3>
-            <hr class="star-primary">
-            <div class="embed-responsive embed-responsive-16by9">
-                <iframe src="https://www.youtube.com/embed/-EhAwKlYJhY">
-                </iframe>
+     <section class="success" id="video">
+       	  <div class="container">
+       	     <h3 class="text-center">Video</h3>
+       	     <hr class="star-light">
+       	     <div class="embed-responsive embed-responsive-16by9">
+         	 <iframe src="https://www.youtube.com/embed/-EhAwKlYJhY">
+         	 </iframe>
             </div>
         </div>
     </section>
@@ -223,7 +241,7 @@
                             <dt class="col-sm-3 text-justify">Authors</dt>
                             <dd class="col-sm-9 text-justify">Flávio Luiz Schiavoni</dd>
                             <dd class="col-sm-9 offset-sm-3 text-justify">Luan Luiz Gonçalves</dd>
-                            <dd class="col-sm-9 offset-sm-3 text-justify"> Andre Lucas Nascimento Gomes</dd>
+                            <dd class="col-sm-9 offset-sm-3 text-justify"> André Lucas Nascimento Gomes</dd>
 
                             <dt class="col-sm-3 text-justify">Abstract</dt>
                             <dd class="col-sm-9 text-justify">
@@ -325,7 +343,7 @@
                         <dl class="row mx-auto">
 
                             <dt class="col-sm-3 text-justify">Title</dt>
-                            <dd class="col-sm-9 text-justify">Percepção Musical apoiada por computador: além das alturas e tempos</dd>
+                            <dd class="col-sm-9 text-justify">Percepção musical apoiada por computador: além das alturas e tempos</dd>
 
                             <dt class="col-sm-3 text-justify">Authors</dt>
                             <dd class="col-sm-9 text-justify">Luan Luiz Gonçalves</dd>
@@ -385,8 +403,8 @@
 
                             <dt class="col-sm-3 text-justify">Authors</dt>
 
-                            <dd class="col-sm-9 text-justify">Lucas Geraldo Silva Cruz (UFSJ)</dd>
-                            <dd class="col-sm-9 offset-sm-3 text-justify">Daniel Luiz Alves Madeira (UFSJ) - </dd>
+                            <dd class="col-sm-9 text-justify">Lucas Geraldo Silva Cruz</dd>
+                            <dd class="col-sm-9 offset-sm-3 text-justify">Daniel Luiz Alves Madeira</dd>
 
                             <dt class="col-sm-3 text-justify">Abstract</dt>
                             <dd class="col-sm-9 text-justify">
@@ -656,22 +674,6 @@
         </div>
     </section>
 
-    <!-- About Section -->
-    <section class="success" id="about">
-        <div class="container">
-            <h3 class="text-center">About</h3>
-            <hr class="star-light">
-            <div class="row">
-                <div class="col-lg-4 offset-lg-2">
-                    <p>Mosaicode is a visual programming environment that aims to meet the specific demands of the field of Digital Arts and generate applications for this field.</p>
-                </div>
-                <div class="col-lg-4">
-                    <p>It is aimed that this tool will help artists to develop their work in a simple and practical way.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
     <section class id="members">
     	<div class="container">
     		<h3 class="text-center"> MEMBERS </h3>
@@ -688,7 +690,8 @@
 					      <h5 class="mt-0 mb-1">Avner Maximiliano</h5>
 					      Undergraduate Student
 					      <br>UFSJ
-					      <br>Lattes - <a href="http://lattes.cnpq.br/9540878384675406">link</a>
+					      <br><a href="http://lattes.cnpq.br/9540878384675406">Lattes</a>
+					      <br><a href="https://github.com/avnermax" target="_blank">Github</a>
 					    </div>
 					  </li>
 					  <li class="media my-4">
@@ -697,7 +700,8 @@
 					      <h5 class="mt-0 mb-1">André Gomes</h5>
 					      Undergraduate Student
 					      <br>UFSJ
-					      <br>Lattes - <a href="http://lattes.cnpq.br/0762220978450376" target="_blank">link</a>
+					      <br><a href="http://lattes.cnpq.br/0762220978450376" target="_blank">Lattes</a>
+					      <br><a href="https://github.com/andgomes95" target="_blank">Github</a>
 					    </div>
 					  </li>
 					  <li class="media my-4">
@@ -706,7 +710,8 @@
 					      <h5 class="mt-0 mb-1">Flávio Schiavoni</h5>
 					      Teacher
 					      <br>UFSJ
-					      <br>Lattes - <a href="http://lattes.cnpq.br/1259591090948385" target="_blank">link</a>
+					      <br><a href="http://lattes.cnpq.br/1259591090948385" target="_blank">Lattes</a>
+					      <br><a href="https://github.com/flschiavoni" target="_blank">Github</a>
 					    </div>
 					  </li>
 					  <li class="media my-4">
@@ -715,63 +720,78 @@
 					      <h5 class="mt-0 mb-1">Fred Resende</h5>
 					      Undergraduate Student
 					      <br>UFSJ
-					      <br>Lattes - <a href="http://lattes.cnpq.br/6452558884220881" target="_blank">link</a>
+					      <br><a href="http://lattes.cnpq.br/6452558884220881" target="_blank">Lattes</a>
+					      <br><a href="https://github.com/frederr97" target="_blank">Github</a>
 					    </div>
 					  </li>
 					  <li class="media my-4">
 					    <img class="mr-3" src="media/coffee.png" alt="Generic placeholder image">
 					    <div class="media-body">
-					    	<h5 class="mt-0 mb-1">José Mauro Sandy</h5>
-					    	Graduate Student
-					    	<br>UFSJ
-					    	<br>Lattes - <a href="http://lattes.cnpq.br/5849035895177823" target="_blank">link</a>
+					      <h5 class="mt-0 mb-1">Gabriel Lopes</h5>
+					      Undergraduate Student
+					      <br>UFSJ
+					      <br><a href="http://lattes.cnpq.br/9312567127659801" target="_blank">Lattes</a>
+					      <br><a href="https://github.com/gbr-cdc" target="_blank">Github</a>
 					    </div>
 					  </li>
 					</ul>
  			    </div>
 			    <div class="col-lg-4 my-4">
 			      <ul class="list-unstyled">
+			          <li class="media my-4">
+					    <img class="mr-3" src="media/coffee.png" alt="Generic placeholder image">
+					    <div class="media-body">
+					    	<h5 class="mt-0 mb-1">José Mauro Sandy</h5>
+					    	Graduate Student
+					    	<br>UFSJ
+					    	<br><a href="http://lattes.cnpq.br/5849035895177823" target="_blank">Lattes</a>
+					    	<br><a href="https://github.com/jmsandy" target="_blank">Github</a>
+					    </div>
+					  </li>
 					  <li class="media my-4">
 					    <img class="mr-3" src="media/coffee.png" alt="Generic placeholder image">
 					    <div class="media-body">
 					      <h5 class="mt-0 mb-1">Luan Gonçalves</h5>
 					      Undergraduate Student
 					      <br>UFSJ
-					      <br>Lattes - <a href="http://lattes.cnpq.br/6417460072852293" target="_blank">link</a>
-					    </div>
-					  </li>
-					  <li class="media">
-					    <img class="mr-3" src="media/coffee.png" alt="Generic placeholder image">
-					    <div class="media-body">
-					      <h5 class="mt-0 mb-1">Rodrigo Araujo</h5>
-					      Undergraduate Student
-					      <br>UFSJ
-					      <!--br>Lattes - <a href="link">link</a-->
+					      <br><a href="http://lattes.cnpq.br/6417460072852293" target="_blank">Lattes</a>
+					      <br><a href="https://github.com/llgoncalves" target="_blank">Github</a>
 					    </div>
 					  </li>
 					  <li class="media my-4">
 					    <img class="mr-3" src="media/coffee.png" alt="Generic placeholder image">
 					    <div class="media-body">
-					      <h5 class="mt-0 mb-1">Roney Ribeiro</h5>
+					      <h5 class="mt-0 mb-1">Paulo Nunes</h5>
 					      Undergraduate Student
 					      <br>UFSJ
-					      <br>Lattes - <a href="http://lattes.cnpq.br/2693817221574436" target="_blank">link</a>
+					      <br><a href="http://lattes.cnpq.br/1652487371469843" target="_blank">Lattes</a>
+					      <br><a href="https://github.com/Paulognc" target="_blank">Github</a>
 					    </div>
 					  </li>
-					  <li class="media">
+					  <li class="media my-4">
+					    <img class="mr-3" src="media/coffee.png" alt="Generic placeholder image">
+					    <div class="media-body">
+					      <h5 class="mt-0 mb-1">Rodrigo Araujo</h5>
+					      Undergraduate Student
+					      <br>UFSJ
+					      <br><a href="http://lattes.cnpq.br/3572175830606296">Lattes</a>
+					      <br><a href="https://github.com/RodrigoRArauj" target="_blank">Github</a>
+					    </div>
+					  </li>
+					  <li class="media my-4">
 					    <img class="mr-3" src="media/coffee.png" alt="Generic placeholder image">
 					    <div class="media-body">
 					      <h5 class="mt-0 mb-1">Thiago Souto</h5>
 					      Undergraduate Student
 					      <br>UFSJ
-					      <br>Lattes - <a href="http://lattes.cnpq.br/6678601857973713" target="_blank">link</a>
+					      <br><a href="http://lattes.cnpq.br/6678601857973713" target="_blank">Lattes</a>
+					      <br><a href="https://github.com/thiagosouto" target="_blank">Github</a>
 					    </div>
 					  </li>
 					</ul>
 			    </div>
 			  </div>
 			</div>
-		-->
 			<h4 class="text-center card-header" style="color: #18bc9c">Former Members</h4>
 			<div class="container">
 			  <div class="row">
@@ -783,7 +803,8 @@
 					      <h5 class="mt-0 mb-1">Carlos Magno</h5>
 					      Undergraduate Student
 					      <br>UFSJ
-					      <br>Lattes - <a href="http://lattes.cnpq.br/6834558718626360" target="_blank">link</a>
+					      <br><a href="http://lattes.cnpq.br/6834558718626360" target="_blank">Lattes</a>
+					      <br><a href="https://github.com/Exterminus">Github</a>
 					    </div>
 					  </li>
 					  <li class="media my-4">
@@ -792,10 +813,20 @@
 					      <h5 class="mt-0 mb-1">Lucas Andrade</h5>
 					      Undergraduate Student
 					      <br>UFSJ
-					      <!--br>Lattes - <a href="link">link</a-->
+					      <br><a href="http://lattes.cnpq.br/1083747665881376">Lattes</a>
+					      <br><a href="https://github.com/lucasxaum">Github</a>
 					    </div>
 					  </li>
-
+                        <li class="media my-4">
+					    <img class="mr-3" src="media/user.png" alt="Generic placeholder image">
+					    <div class="media-body">
+					      <h5 class="mt-0 mb-1">Lucas Cruz</h5>
+					      Undergraduate Student
+					      <br>UFSJ
+					      <br><a href=" http://lattes.cnpq.br/1457377562715354" target="_blank">Lattes</a>
+					      <br><a href="https://github.com/Lucasgscruz">Github</a>
+					    </div>
+					  </li>
 					</ul>
  			    </div>
 			    <div class="col-lg-4 my-4">
@@ -803,10 +834,11 @@
 					  <li class="media my-4">
 					    <img class="mr-3" src="media/user.png" alt="Generic placeholder image">
 					    <div class="media-body">
-					      <h5 class="mt-0 mb-1">Lucas Cruz</h5>
+					      <h5 class="mt-0 mb-1">Roney Ribeiro</h5>
 					      Undergraduate Student
 					      <br>UFSJ
-					      <br>Lattes - <a href=" http://lattes.cnpq.br/1457377562715354" target="_blank">link</a>
+					      <br><a href="http://lattes.cnpq.br/2693817221574436" target="_blank">Lattes</a>
+					      <br><a href="https://github.com/ronesantos">Github</a>
 					    </div>
 					  </li>
 					  <li class="media my-4">
@@ -815,7 +847,8 @@
 					      <h5 class="mt-0 mb-1">Valney Faria</h5>
 					      Undergraduate Student
 					      <br>UFSJ
-					      <br>Lattes - <a href="http://lattes.cnpq.br/8448041674461737" target="_blank">link</a>
+					      <br><a href="http://lattes.cnpq.br/8448041674461737" target="_blank">Lattes</a>
+					      <br><a href="https://github.com/ValneyFaria">Github</a>
 					    </div>
 					  </li>
 					</ul>
