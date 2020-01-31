@@ -1,15 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
     
     <title>Mosaicode</title>
-    
+
     <!-- Bootstrap core CSS -->
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
@@ -97,13 +95,47 @@
     </section>
 
     <!-- Video Grid Section -->
-     <section class="success" id="video">
-       	  <div class="container">
-       	     <h3 class="text-center">Video</h3>
-       	     <hr class="star-light">
-       	     <div class="embed-responsive embed-responsive-16by9">
-         	 <iframe src="https://www.youtube.com/embed/-EhAwKlYJhY">
-         	 </iframe>
+    <section class="success" id="video">
+        <div class="container-fluid">
+            <h3 class="text-center">Video</h3>
+            <hr class="star-light">
+            <div id="carousel-video-section" class="carousel slide" data-ride="carousel" data-interval="false">
+                <!-- Indicators -->
+                <ol class="carousel-indicators">
+                    <li data-target="#carousel-video-section" data-slide-to="0" class="active"></li>
+                    <li data-target="#carousel-video-section" data-slide-to="1"></li>
+                    <li data-target="#carousel-video-section" data-slide-to="2"></li>
+                </ol>
+                <!-- Wrapper for slides -->
+                <div class="carousel-inner">
+                    <div class="carousel-item">
+                        <div class="embed-responsive embed-responsive-16by9">
+                            <iframe src="https://www.youtube.com/embed/-EhAwKlYJhY" 
+                                allowfullscreen="allowfullscreen"
+                                mozallowfullscreen="mozallowfullscreen" 
+                                msallowfullscreen="msallowfullscreen" 
+                                oallowfullscreen="oallowfullscreen" 
+                                webkitallowfullscreen="webkitallowfullscreen" 
+                                style="height: 95% !important;"></iframe>
+                        </div>
+                    </div>
+                    <div class="carousel-item active" >              
+                        <div class="embed-responsive embed-responsive-16by9">
+                            <video style="height: 95% !important;" controls>
+                                <source src="media/sbsoft-2018.mp4" type="video/mp4" >
+                            </video>
+                        </div>
+                    </div>
+                    <div class="carousel-item" >              
+                        <div class="embed-responsive embed-responsive-16by9">
+                            <video style="height: 95% !important;" controls>
+                                <source src="media/lab-alice-01.mp4" type="video/mp4" >
+                            </video>
+                        </div>
+                    </div>
+                </div>
+                <a class="left carousel-control" href="#carousel-video-section" data-slide="prev">‹</a>
+                <a class="right carousel-control" href="#carousel-video-section" data-slide="next">›</a>
             </div>
         </div>
     </section>
@@ -908,10 +940,9 @@
         </a>
     </div>
 
-
-    <!-- Bootstrap core JavaScript -->
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/tether/tether.min.js"></script>
+    <!-- Bootstrap core JavaScript --> 
+    <script src="vendor/jquery/jquery.min.js"></script> 
+    <script src="vendor/tether/tether.min.js"></script> 
     <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
 
     <!-- Plugin JavaScript -->
@@ -927,5 +958,4 @@
     <script src="js/index.js"></script>
 
 </body>
-
 </html>
